@@ -5,11 +5,15 @@ import { setPageTitle } from '@/js/helpers/pageTitle'
 import BaseLayout from '@/js/pages/layout'
 
 
-// Pages
+//  Pages
 // ** guest
 import Login from '@/js/pages/Login'
 
 // ** auth
+import Dashboard from '@/js/pages/auth/dashboard'
+
+
+// Routes 
 import TodoRoute from '@/js/routes/web/todos'
 
 
@@ -20,7 +24,16 @@ import TodoRoute from '@/js/routes/web/todos'
 // ** auth: null, title: '' <- no auth rule
 
 const baseLayoutRoutes = [
-
+    { 
+        path: '/dashboard', name:'dashboard', component: Dashboard, 
+        meta: { 
+            auth: {
+                roles: [1],
+                redirect: {name: 'login'}, forbiddenRedirect: '/403'
+            }, 
+            title: 'Dashboard', moduleName: 'dashboard' 
+        } 
+    }
 ].concat(
     TodoRoute
 )

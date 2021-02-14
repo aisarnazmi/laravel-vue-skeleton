@@ -6,9 +6,11 @@ import axios from 'axios'
 import Vue from 'vue'
 import VueAuth from '@websanova/vue-auth'
 import VueAxios from 'vue-axios'
+import VueCookies from 'vue-cookies'
 import VueRouter from 'vue-router'
 
 import * as filters from '@/js/filters'; // global filters
+import store from '@/js/store/store'
 import auth from './auth'
 import router from './routes/web/'
 import api from './routes/api/'
@@ -26,6 +28,10 @@ VueRouter.prototype.push = function push(location) {
     return originalPush.call(this, location).catch(err => err)
 };
 Vue.use(VueRouter)
+
+// Set vue cookies
+Vue.use(VueCookies)
+$cookies.config('7d') // cookies exp
 
 // Set Vue authentication
 Vue.use(VueAxios, axios)
@@ -45,5 +51,6 @@ Vue.prototype.$api = api // ** can call globally "this.$api"
 Vue.component('index', Index)
 
 const app = new Vue({
-    router: Vue.router
+    router,
+    store
 }).$mount('#app')
