@@ -1,5 +1,16 @@
 const mix = require('laravel-mix');
 
+mix.webpackConfig({
+	externals: {
+	    application: "application"
+	},
+	resolve: {
+		extensions : ['.js','.vue'],
+		alias : {
+			'@' : __dirname + '/resources',
+		}
+	}
+});
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -11,7 +22,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js('resources/js/app.js', 'public/js').vue()
     .postCss('resources/css/app.css', 'public/css', [
         //
     ]);
+
+    if (mix.inProduction()) {
+        mix.version();
+        }else{
+        mix.version(); // un-comment this when want to run hot
+        }
+
